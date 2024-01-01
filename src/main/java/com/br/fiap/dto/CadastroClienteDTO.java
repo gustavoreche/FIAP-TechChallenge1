@@ -1,5 +1,8 @@
 package com.br.fiap.dto;
 
+import com.br.fiap.model.Cliente;
+import com.br.fiap.model.FiltroDeBusca;
+
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
@@ -26,4 +29,19 @@ public record CadastroClienteDTO (
 		
 		String categoria
 
-) {}
+) {
+
+	public Cliente toEntity() {
+		var filtroDeBusca = new FiltroDeBusca();
+		filtroDeBusca.setAno(this.ano);
+		filtroDeBusca.setModelo(this.modelo);
+		filtroDeBusca.setCategoria(this.categoria);		
+		
+		var cliente = new Cliente();
+		cliente.setNome(this.nome);
+		cliente.setTelefone(this.telefone);
+		cliente.setEmail(this.email);
+		cliente.setFiltroDeBusca(filtroDeBusca);
+		return cliente;
+	}
+}
