@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.br.fiap.dto.CadastroClienteDTO;
 import com.br.fiap.repository.ClienteRepository;
+import com.br.fiap.repository.FilaAtendimentoRepository;
 
 import jakarta.validation.Valid;
 
@@ -19,15 +20,18 @@ import jakarta.validation.Valid;
 public class ClienteController {
 	
 	@Autowired
-	private ClienteRepository repository;
+	private ClienteRepository clienteRepository;
+	
+	@Autowired
+	private FilaAtendimentoRepository filaAtendimentoRepository;
 	
 	@PostMapping()
 	public ResponseEntity<Void> cadastraCliente(@RequestBody @Valid CadastroClienteDTO formulario,
 			@RequestHeader LocalAcessadoEnum localAcessado) {
 		if(localAcessado.equals(LocalAcessadoEnum.ESTANDE)) {
-			this.repository.save(formulario.toEntity());
+			this.clienteRepository.save(formulario.converteParaCliente());
 		} else {
-			System.out.println("colocar cliente em uma fila de atendimento");
+			this.filaAtendimentoRepository.save(formulario.converteParaFilaDeAtendimento());
 		}
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
