@@ -1,6 +1,10 @@
 package com.br.fiap.dto;
 
+import java.time.LocalDateTime;
+
 import com.br.fiap.model.Cliente;
+import com.br.fiap.model.ClienteId;
+import com.br.fiap.model.FilaAtendimento;
 import com.br.fiap.model.FiltroDeBusca;
 
 import jakarta.validation.constraints.Email;
@@ -31,17 +35,35 @@ public record CadastroClienteDTO (
 
 ) {
 
-	public Cliente toEntity() {
+	public Cliente converteParaCliente() {
 		var filtroDeBusca = new FiltroDeBusca();
 		filtroDeBusca.setAno(this.ano);
 		filtroDeBusca.setModelo(this.modelo);
 		filtroDeBusca.setCategoria(this.categoria);		
 		
 		var cliente = new Cliente();
-		cliente.setNome(this.nome);
+		cliente.setId(converteParaClienteId());
 		cliente.setTelefone(this.telefone);
-		cliente.setEmail(this.email);
 		cliente.setFiltroDeBusca(filtroDeBusca);
 		return cliente;
+	}
+	
+	public FilaAtendimento converteParaFilaDeAtendimento() {
+		var filaAtendimento = new FilaAtendimento();
+		filaAtendimento.setAnoFiltroDeBusca(this.ano);
+		filaAtendimento.setModeloFiltroDeBusca(this.modelo);
+		filaAtendimento.setCategoriaFiltroDeBusca(this.categoria);		
+		filaAtendimento.setId(converteParaClienteId());
+		filaAtendimento.setTelefone(this.telefone);
+		filaAtendimento.setDataInsercao(LocalDateTime.now());
+		return filaAtendimento;
+	}
+	
+	
+	private ClienteId converteParaClienteId() {
+		var clienteId = new ClienteId();
+		clienteId.setNome(this.nome);
+		clienteId.setEmail(this.email);
+		return clienteId;
 	}
 }
