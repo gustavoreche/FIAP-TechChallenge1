@@ -2,6 +2,8 @@ package com.br.fiap.model;
 
 import java.time.LocalDateTime;
 
+import com.br.fiap.dto.ClienteNaFilaDTO;
+
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -19,5 +21,16 @@ public class FilaAtendimento {
 	private String modeloFiltroDeBusca;
 	private String categoriaFiltroDeBusca;
 	private LocalDateTime dataInsercao;
+	
+	public ClienteNaFilaDTO converteParaClienteNaFila() {
+		return new ClienteNaFilaDTO(
+				this.id.getNome(),
+				this.id.getEmail(),
+				this.telefone,
+				this.anoFiltroDeBusca,
+				this.modeloFiltroDeBusca,
+				this.categoriaFiltroDeBusca
+			);
+	}
 
 }
