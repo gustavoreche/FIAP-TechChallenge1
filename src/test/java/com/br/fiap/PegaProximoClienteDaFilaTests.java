@@ -3,9 +3,12 @@ package com.br.fiap;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +26,7 @@ import com.br.fiap.repository.FilaAtendimentoRepository;
  
 @AutoConfigureMockMvc
 @SpringBootTest
+@TestInstance(Lifecycle.PER_CLASS)
 class PegaProximoClienteDaFilaTests {
 	
 	@Autowired
@@ -41,6 +45,12 @@ class PegaProximoClienteDaFilaTests {
     void cleanDatabase() {
     	this.clienteRepository.deleteAll();
     	this.filaAtendimentoRepository.deleteAll();
+    }
+    
+    @AfterAll
+    void cleanDatabaseToOtherTests() {
+    	clienteRepository.deleteAll();
+    	filaAtendimentoRepository.deleteAll();
     }
 
     @Test

@@ -1,8 +1,11 @@
 package com.br.fiap;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,7 @@ import com.br.fiap.repository.FilaAtendimentoRepository;
  
 @AutoConfigureMockMvc
 @SpringBootTest
+@TestInstance(Lifecycle.PER_CLASS)
 class CadastraClienteTests {
 	
 	@Autowired
@@ -36,6 +40,12 @@ class CadastraClienteTests {
     
     @BeforeEach
     void cleanDatabase() {
+    	this.clienteRepository.deleteAll();
+    	this.filaAtendimentoRepository.deleteAll();
+    }
+    
+    @AfterAll
+    void cleanDatabaseToOtherTests() {
     	this.clienteRepository.deleteAll();
     	this.filaAtendimentoRepository.deleteAll();
     }
