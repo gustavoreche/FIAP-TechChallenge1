@@ -7,5 +7,7 @@ import com.br.fiap.model.FilaAtendimento;
 
 @Repository
 public interface FilaAtendimentoRepository extends JpaRepository<FilaAtendimento, Long> {
+	
+	public FilaAtendimento findTop1ByOrderByDataInsercaoAsc();
 
 }
