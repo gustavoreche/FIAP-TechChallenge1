@@ -3,9 +3,12 @@ package com.br.fiap;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +28,7 @@ import com.br.fiap.repository.FilaAtendimentoRepository;
  
 @AutoConfigureMockMvc
 @SpringBootTest
+@TestInstance(Lifecycle.PER_CLASS)
 class RegistraAtendimentoTests {
 	
 	@Autowired
@@ -44,6 +48,13 @@ class RegistraAtendimentoTests {
     
     @BeforeEach
     void cleanDatabase() {
+    	this.atendimentoRepository.deleteAll();
+    	this.clienteRepository.deleteAll();
+    	this.filaAtendimentoRepository.deleteAll();
+    }
+    
+    @AfterAll
+    void cleanDatabaseToOtherTests() {
     	this.atendimentoRepository.deleteAll();
     	this.clienteRepository.deleteAll();
     	this.filaAtendimentoRepository.deleteAll();
