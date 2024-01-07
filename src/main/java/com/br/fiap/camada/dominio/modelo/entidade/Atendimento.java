@@ -1,4 +1,6 @@
-package com.br.fiap.camada.dominio.modelo;
+package com.br.fiap.camada.dominio.modelo.entidade;
+
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.Cliente;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;

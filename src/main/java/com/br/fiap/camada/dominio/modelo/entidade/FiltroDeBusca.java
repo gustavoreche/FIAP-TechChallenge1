@@ -1,4 +1,4 @@
-package com.br.fiap.camada.dominio.modelo;
+package com.br.fiap.camada.dominio.modelo.entidade;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
