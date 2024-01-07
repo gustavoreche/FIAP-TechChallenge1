@@ -1,8 +1,8 @@
-package com.br.fiap.model;
+package com.br.fiap.camada.dominio.modelo;
 
 import java.time.LocalDateTime;
 
-import com.br.fiap.dto.ClienteNaFilaDTO;
+import com.br.fiap.camada.dominio.servico.ClienteNaFilaDTO;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
