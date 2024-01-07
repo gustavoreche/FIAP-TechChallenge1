@@ -1,4 +1,4 @@
-package com.br.fiap.model;
+package com.br.fiap.camada.dominio.modelo;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.EmbeddedId;

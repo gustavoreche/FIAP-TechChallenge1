@@ -16,10 +16,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.br.fiap.controller.ClienteController;
-import com.br.fiap.controller.LocalAcessadoEnum;
-import com.br.fiap.repository.ClienteRepository;
-import com.br.fiap.repository.FilaAtendimentoRepository;
+import com.br.fiap.camada.infraestrutura.ClienteRepository;
+import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
+import com.br.fiap.camada.interfaceUsuario.ClienteController;
+import com.br.fiap.camada.interfaceUsuario.LocalAcessadoEnum;
  
 @AutoConfigureMockMvc
 @SpringBootTest

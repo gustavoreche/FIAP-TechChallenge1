@@ -22,14 +22,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.br.fiap.controller.VendedorController;
-import com.br.fiap.model.Cliente;
-import com.br.fiap.model.ClienteId;
-import com.br.fiap.model.FilaAtendimento;
-import com.br.fiap.model.FiltroDeBusca;
-import com.br.fiap.repository.AtendimentoRepository;
-import com.br.fiap.repository.ClienteRepository;
-import com.br.fiap.repository.FilaAtendimentoRepository;
+import com.br.fiap.camada.dominio.modelo.Cliente;
+import com.br.fiap.camada.dominio.modelo.ClienteId;
+import com.br.fiap.camada.dominio.modelo.FilaAtendimento;
+import com.br.fiap.camada.dominio.modelo.FiltroDeBusca;
+import com.br.fiap.camada.infraestrutura.AtendimentoRepository;
+import com.br.fiap.camada.infraestrutura.ClienteRepository;
+import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
+import com.br.fiap.camada.interfaceUsuario.VendedorController;
  
 @AutoConfigureMockMvc
 @SpringBootTest

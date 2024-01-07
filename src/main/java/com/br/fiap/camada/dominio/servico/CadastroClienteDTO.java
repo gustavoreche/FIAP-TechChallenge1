@@ -1,11 +1,11 @@
-package com.br.fiap.dto;
+package com.br.fiap.camada.dominio.servico;
 
 import java.time.LocalDateTime;
 
-import com.br.fiap.model.Cliente;
-import com.br.fiap.model.ClienteId;
-import com.br.fiap.model.FilaAtendimento;
-import com.br.fiap.model.FiltroDeBusca;
+import com.br.fiap.camada.dominio.modelo.Cliente;
+import com.br.fiap.camada.dominio.modelo.ClienteId;
+import com.br.fiap.camada.dominio.modelo.FilaAtendimento;
+import com.br.fiap.camada.dominio.modelo.FiltroDeBusca;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

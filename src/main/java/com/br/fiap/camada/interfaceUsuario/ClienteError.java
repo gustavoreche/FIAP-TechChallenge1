@@ -1,4 +1,4 @@
-package com.br.fiap.controller;
+package com.br.fiap.camada.interfaceUsuario;
 
 import java.util.HashMap;
 import java.util.Map;

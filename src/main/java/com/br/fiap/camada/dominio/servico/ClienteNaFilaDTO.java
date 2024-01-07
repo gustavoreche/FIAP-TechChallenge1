@@ -1,4 +1,4 @@
-package com.br.fiap.dto;
+package com.br.fiap.camada.dominio.servico;
 
 public record ClienteNaFilaDTO (
 		String nome,
