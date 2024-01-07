@@ -22,10 +22,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.br.fiap.camada.dominio.modelo.Cliente;
-import com.br.fiap.camada.dominio.modelo.ClienteId;
-import com.br.fiap.camada.dominio.modelo.FilaAtendimento;
-import com.br.fiap.camada.dominio.modelo.FiltroDeBusca;
+import com.br.fiap.camada.dominio.modelo.entidade.FiltroDeBusca;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.Cliente;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.ClienteId;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
 import com.br.fiap.camada.infraestrutura.AtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.ClienteRepository;
 import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;

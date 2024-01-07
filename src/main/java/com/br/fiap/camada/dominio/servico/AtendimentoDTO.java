@@ -1,7 +1,7 @@
 package com.br.fiap.camada.dominio.servico;
 
-import com.br.fiap.camada.dominio.modelo.Atendimento;
-import com.br.fiap.camada.dominio.modelo.ClienteId;
+import com.br.fiap.camada.dominio.modelo.entidade.Atendimento;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.ClienteId;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

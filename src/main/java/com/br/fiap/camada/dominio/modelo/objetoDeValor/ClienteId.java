@@ -1,4 +1,4 @@
-package com.br.fiap.camada.dominio.modelo;
+package com.br.fiap.camada.dominio.modelo.objetoDeValor;
 
 import jakarta.persistence.Embeddable;
 import lombok.Data;

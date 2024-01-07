@@ -1,4 +1,6 @@
-package com.br.fiap.camada.dominio.modelo;
+package com.br.fiap.camada.dominio.modelo.objetoDeValor;
+
+import com.br.fiap.camada.dominio.modelo.entidade.FiltroDeBusca;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.EmbeddedId;
