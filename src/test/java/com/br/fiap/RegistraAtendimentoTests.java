@@ -29,15 +29,17 @@ import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
 import com.br.fiap.camada.infraestrutura.AtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.ClienteRepository;
 import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
-import com.br.fiap.camada.interfaceUsuario.VendedorController;
+import com.br.fiap.camada.interfaceUsuario.AtendimentoController;
  
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestInstance(Lifecycle.PER_CLASS)
 class RegistraAtendimentoTests {
 	
+	private static final String URL= "/atendimento";
+	
 	@Autowired
-    VendedorController vendedorController;
+    AtendimentoController vendedorController;
 	
 	@Autowired
 	ClienteRepository clienteRepository;
@@ -102,7 +104,7 @@ class RegistraAtendimentoTests {
         			);
     	
         this.mockMvc
-        	.perform(MockMvcRequestBuilders.post("/vendedor/registra-atendimento")
+        	.perform(MockMvcRequestBuilders.post(URL)
         			.header("localAcessado", "SITE")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content(request))
@@ -161,7 +163,7 @@ class RegistraAtendimentoTests {
         			);
     	
         this.mockMvc
-        	.perform(MockMvcRequestBuilders.post("/vendedor/registra-atendimento")
+        	.perform(MockMvcRequestBuilders.post(URL)
         			.header("localAcessado", "ESTANDE")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content(request))
@@ -223,7 +225,7 @@ class RegistraAtendimentoTests {
         			);
     	
         this.mockMvc
-        	.perform(MockMvcRequestBuilders.post("/vendedor/registra-atendimento")
+        	.perform(MockMvcRequestBuilders.post(URL)
         			.header("localAcessado", "SITE")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content(request))
@@ -294,7 +296,7 @@ class RegistraAtendimentoTests {
         			);
     	
         this.mockMvc
-        	.perform(MockMvcRequestBuilders.post("/vendedor/registra-atendimento")
+        	.perform(MockMvcRequestBuilders.post(URL)
         			.header("localAcessado", "ESTANDE")
         			.contentType(MediaType.APPLICATION_JSON)
         			.content(request))
@@ -343,7 +345,7 @@ class RegistraAtendimentoTests {
         			);
     	
 				this.mockMvc
-				.perform(MockMvcRequestBuilders.post("/vendedor/registra-atendimento")
+				.perform(MockMvcRequestBuilders.post(URL)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(request))
 				.andExpect(MockMvcResultMatchers.status().isBadRequest()
@@ -433,7 +435,7 @@ class RegistraAtendimentoTests {
     
 	private void assertBadRequest(String request, String header) throws Exception {
 		this.mockMvc
-				.perform(MockMvcRequestBuilders.post("/vendedor/registra-atendimento")
+				.perform(MockMvcRequestBuilders.post(URL)
 						.header("localAcessado", header)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(request))

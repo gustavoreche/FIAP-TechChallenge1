@@ -9,18 +9,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.br.fiap.camada.dominio.servico.AtendimentoDTO;
-import com.br.fiap.camada.dominio.servico.VendedorService;
+import com.br.fiap.camada.dominio.servico.AtendimentoService;
 
 import jakarta.validation.Valid;
 
 @RestController
-@RequestMapping("/vendedor")
-public class VendedorController {
+@RequestMapping("/atendimento")
+public class AtendimentoController {
 	
 	@Autowired
-	private VendedorService service;
+	private AtendimentoService service;
 	
-	@PostMapping("/registra-atendimento")
+	@PostMapping()
 	public ResponseEntity<Void> registraAtendimento(@RequestBody @Valid AtendimentoDTO formulario,
 			@RequestHeader LocalAcessadoEnum localAcessado) {
 		return this.service.registraAtendimento(formulario, localAcessado);
