@@ -11,7 +11,7 @@ import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
 import com.br.fiap.camada.interfaceUsuario.LocalAcessadoEnum;
 
 @Service
-public class VendedorService {
+public class AtendimentoService {
 	
 	@Autowired
 	private ClienteRepository clienteRepository;
