@@ -1,7 +1,7 @@
 package com.br.fiap.camada.dominio.servico;
 
 import com.br.fiap.camada.dominio.modelo.entidade.Atendimento;
-import com.br.fiap.camada.dominio.modelo.objetoDeValor.ClienteId;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.LeadId;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -13,19 +13,19 @@ public record AtendimentoDTO (
 		String nome,
 		
 		@NotNull
-		CadastroClienteDTO cliente
+        CadastroLeadDTO cliente
 
 ) {
 
 	public Atendimento converteParaAtendimento() {
 		var atendimento = new Atendimento();
 		atendimento.setNome(this.nome);
-		atendimento.setCliente(this.cliente.converteParaCliente());
+		atendimento.setCliente(this.cliente.converteParaLead());
 		return atendimento;
 	}
 
-	public ClienteId pegaIdFilaAtendimento() {
-		var clienteId = new ClienteId();
+	public LeadId pegaIdFilaAtendimento() {
+		var clienteId = new LeadId();
 		clienteId.setNome(this.cliente.nome());
 		clienteId.setEmail(this.cliente.email());
 		return clienteId;
