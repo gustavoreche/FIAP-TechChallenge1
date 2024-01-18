@@ -24,7 +24,7 @@ public record AtendimentoDTO (
 		return atendimento;
 	}
 
-	public LeadId pegaIdFilaAtendimento() {
+	public LeadId pegaLeadId() {
 		var leadId = new LeadId();
 		leadId.setNome(this.lead.nome());
 		leadId.setEmail(this.lead.email());
