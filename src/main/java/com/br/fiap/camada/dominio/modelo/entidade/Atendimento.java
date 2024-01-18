@@ -1,14 +1,7 @@
 package com.br.fiap.camada.dominio.modelo.entidade;
 
 import com.br.fiap.camada.dominio.modelo.objetoDeValor.Lead;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -20,7 +13,7 @@ public class Atendimento {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome; 
-	@OneToOne(cascade = CascadeType.MERGE)
-	private Lead cliente;
+	@OneToOne(cascade = CascadeType.PERSIST)
+	private Lead lead;
 
 }

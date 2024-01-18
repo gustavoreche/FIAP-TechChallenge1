@@ -13,21 +13,21 @@ public record AtendimentoDTO (
 		String nome,
 		
 		@NotNull
-        CadastroLeadDTO cliente
+        CadastroLeadDTO lead
 
 ) {
 
 	public Atendimento converteParaAtendimento() {
 		var atendimento = new Atendimento();
 		atendimento.setNome(this.nome);
-		atendimento.setCliente(this.cliente.converteParaLead());
+		atendimento.setLead(this.lead.converteParaLead());
 		return atendimento;
 	}
 
 	public LeadId pegaIdFilaAtendimento() {
-		var clienteId = new LeadId();
-		clienteId.setNome(this.cliente.nome());
-		clienteId.setEmail(this.cliente.email());
-		return clienteId;
+		var leadId = new LeadId();
+		leadId.setNome(this.lead.nome());
+		leadId.setEmail(this.lead.email());
+		return leadId;
 	}
 }
