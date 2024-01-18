@@ -1,6 +1,6 @@
 package com.br.fiap.camada.dominio.modelo.objetoDeValor;
 
-import com.br.fiap.camada.dominio.servico.ClienteNaFilaDTO;
+import com.br.fiap.camada.dominio.servico.LeadNaFilaDTO;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -20,8 +20,8 @@ public class FilaAtendimento {
 	private String modeloFiltroDeBusca;
 	private LocalDateTime dataInsercao;
 	
-	public ClienteNaFilaDTO converteParaClienteNaFila() {
-		return new ClienteNaFilaDTO(
+	public LeadNaFilaDTO converteParaLeadNaFila() {
+		return new LeadNaFilaDTO(
 				this.id.getNome(),
 				this.id.getEmail(),
 				this.telefone,

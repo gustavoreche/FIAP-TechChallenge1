@@ -28,15 +28,15 @@ public class LeadService {
 				.build();
 	}
 	
-	public ResponseEntity<ClienteNaFilaDTO> proximoClienteDaFila() {
-		var clienteNaFila = this.filaAtendimentoRepository.findTop1ByOrderByDataInsercaoAsc();
-		if(Objects.isNull(clienteNaFila)) {
+	public ResponseEntity<LeadNaFilaDTO> proximoLeadDaFila() {
+		var leadNaFila = this.filaAtendimentoRepository.findTop1ByOrderByDataInsercaoAsc();
+		if(Objects.isNull(leadNaFila)) {
 			return ResponseEntity
 					.noContent()
 					.build();
 		}
 		return ResponseEntity
-				.ok(clienteNaFila.converteParaClienteNaFila());
+				.ok(leadNaFila.converteParaLeadNaFila());
 	}
 	
 }

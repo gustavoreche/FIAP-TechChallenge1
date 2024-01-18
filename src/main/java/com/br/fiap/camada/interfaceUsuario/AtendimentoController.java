@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import static com.br.fiap.camada.interfaceUsuario.AtendimentoController.URL_ATENDIMENTO;
+
 @RestController
-@RequestMapping("/atendimento")
+@RequestMapping(URL_ATENDIMENTO)
 public class AtendimentoController {
+
+	public static final String URL_ATENDIMENTO = "/atendimento";
 	
 	@Autowired
 	private AtendimentoService service;
