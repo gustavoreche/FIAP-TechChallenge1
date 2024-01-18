@@ -41,33 +41,36 @@ class CadastraLeadTests {
 
 	@Autowired
 	private ObjectMapper objectMapper;
-    
+
     @BeforeEach
-    void cleanDatabase() {
+    void inicializaLimpezaDoDatabase() {
     	this.leadRepository.deleteAll();
     	this.filaAtendimentoRepository.deleteAll();
     }
     
     @AfterAll
-    void limpaDatabase() {
+    void finalizaLimpezaDoDatabase() {
     	this.leadRepository.deleteAll();
     	this.filaAtendimentoRepository.deleteAll();
     }
 
     @Test
     public void deveRetornarStatus201() throws Exception {
-        var request = """
-        		{
-        			"nome": "Gustavo",
-        			"telefone": "16911223344",
-        			"email": "gustavo@teste.com",
-        			"ano": "2020",
-        			"modelo": "Onix"
-        		}
-        		""";
+		var request = new CadastroLeadDTO(
+				"Gustavo",
+				"16911223344",
+				"gustavo@teste.com",
+				"2020",
+				"Onix"
+		);
+		var objectMapper = this.objectMapper
+				.writer()
+				.withDefaultPrettyPrinter();
+		var jsonRequest = objectMapper.writeValueAsString(request);
+
         this.mockMvc
         	.perform(MockMvcRequestBuilders.post(URL_LEAD)
-        			.content(request)
+        			.content(jsonRequest)
         			.contentType(MediaType.APPLICATION_JSON))
         	.andExpect(MockMvcResultMatchers
         			.status()
