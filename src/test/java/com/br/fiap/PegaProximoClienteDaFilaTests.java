@@ -1,13 +1,12 @@
 package com.br.fiap;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.LeadId;
+import com.br.fiap.camada.dominio.servico.ClienteNaFilaDTO;
+import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
+import com.br.fiap.camada.infraestrutura.LeadRepository;
+import com.br.fiap.camada.interfaceUsuario.LeadController;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,12 +16,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import com.br.fiap.camada.dominio.modelo.objetoDeValor.ClienteId;
-import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
-import com.br.fiap.camada.dominio.servico.ClienteNaFilaDTO;
-import com.br.fiap.camada.infraestrutura.ClienteRepository;
-import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
-import com.br.fiap.camada.interfaceUsuario.ClienteController;
+import java.time.LocalDateTime;
+import java.util.List;
  
 @AutoConfigureMockMvc
 @SpringBootTest
@@ -30,10 +25,10 @@ import com.br.fiap.camada.interfaceUsuario.ClienteController;
 class PegaProximoClienteDaFilaTests {
 	
 	@Autowired
-    ClienteController clienteController;
+    LeadController clienteController;
 	
 	@Autowired
-	ClienteRepository clienteRepository;
+	LeadRepository clienteRepository;
 	
 	@Autowired
 	FilaAtendimentoRepository filaAtendimentoRepository;
@@ -55,13 +50,12 @@ class PegaProximoClienteDaFilaTests {
 
     @Test
     public void shouldReturnStatus200() throws Exception {
-		var clienteId = new ClienteId();
+		var clienteId = new LeadId();
 		clienteId.setNome("gustavo");
 		clienteId.setEmail("gustavo@teste.com");
     	var filaAtendimento = new FilaAtendimento();
 		filaAtendimento.setAnoFiltroDeBusca("2020");
 		filaAtendimento.setModeloFiltroDeBusca("gol");
-		filaAtendimento.setCategoriaFiltroDeBusca("suv");		
 		filaAtendimento.setId(clienteId);
 		filaAtendimento.setTelefone("911223344");
 		filaAtendimento.setDataInsercao(LocalDateTime.now());
@@ -80,24 +74,22 @@ class PegaProximoClienteDaFilaTests {
     
     @Test
     public void shouldReturnStatus200_withMoreThanOneCustomer() throws Exception {
-		var clienteId = new ClienteId();
+		var clienteId = new LeadId();
 		clienteId.setNome("gustavo");
 		clienteId.setEmail("gustavo@teste.com");
     	var filaAtendimento = new FilaAtendimento();
 		filaAtendimento.setAnoFiltroDeBusca("2020");
 		filaAtendimento.setModeloFiltroDeBusca("gol");
-		filaAtendimento.setCategoriaFiltroDeBusca("suv");		
 		filaAtendimento.setId(clienteId);
 		filaAtendimento.setTelefone("911223344");
 		filaAtendimento.setDataInsercao(LocalDateTime.now().plusMinutes(1));
 		
-		var clienteId2 = new ClienteId();
+		var clienteId2 = new LeadId();
 		clienteId2.setNome("gustavo teste");
 		clienteId2.setEmail("teste@gustavo.com");
     	var filaAtendimento2 = new FilaAtendimento();
 		filaAtendimento2.setAnoFiltroDeBusca("2024");
 		filaAtendimento2.setModeloFiltroDeBusca("onix");
-		filaAtendimento2.setCategoriaFiltroDeBusca("sedan");		
 		filaAtendimento2.setId(clienteId2);
 		filaAtendimento2.setTelefone("991919191");
 		filaAtendimento2.setDataInsercao(LocalDateTime.now());
@@ -117,8 +109,7 @@ class PegaProximoClienteDaFilaTests {
         				clienteId2.getEmail(),
         				filaAtendimento2.getTelefone(),
         				filaAtendimento2.getAnoFiltroDeBusca(),
-        				filaAtendimento2.getModeloFiltroDeBusca(),
-        				filaAtendimento2.getCategoriaFiltroDeBusca()
+        				filaAtendimento2.getModeloFiltroDeBusca()
         			)
         		);
         Assertions.assertEquals(2, this.filaAtendimentoRepository.findAll().size());

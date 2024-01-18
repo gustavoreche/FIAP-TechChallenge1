@@ -5,6 +5,5 @@ public record ClienteNaFilaDTO (
 		String email,
 		String telefone,
 		String anoFiltroDeBusca,
-		String modeloFiltroDeBusca,
-		String categoriaFiltroDeBusca
+		String modeloFiltroDeBusca
 ) {}

@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Embeddable
 @Data
-public class ClienteId {
+public class LeadId {
 	
 	private String nome;
 	private String email;

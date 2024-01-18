@@ -1,13 +1,12 @@
 package com.br.fiap.camada.dominio.modelo.objetoDeValor;
 
-import java.time.LocalDateTime;
-
 import com.br.fiap.camada.dominio.servico.ClienteNaFilaDTO;
-
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Data;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_fila_atendimento")
@@ -15,11 +14,10 @@ import lombok.Data;
 public class FilaAtendimento {
 	
 	@EmbeddedId
-	private ClienteId id; 
+	private LeadId id;
 	private String telefone;
 	private String anoFiltroDeBusca;
 	private String modeloFiltroDeBusca;
-	private String categoriaFiltroDeBusca;
 	private LocalDateTime dataInsercao;
 	
 	public ClienteNaFilaDTO converteParaClienteNaFila() {
@@ -28,8 +26,7 @@ public class FilaAtendimento {
 				this.id.getEmail(),
 				this.telefone,
 				this.anoFiltroDeBusca,
-				this.modeloFiltroDeBusca,
-				this.categoriaFiltroDeBusca
+				this.modeloFiltroDeBusca
 			);
 	}
 

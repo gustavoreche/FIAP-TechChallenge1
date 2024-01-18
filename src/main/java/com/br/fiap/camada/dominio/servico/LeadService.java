@@ -1,32 +1,28 @@
 package com.br.fiap.camada.dominio.servico;
 
-import java.util.Objects;
-
+import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
+import com.br.fiap.camada.infraestrutura.LeadRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.br.fiap.camada.infraestrutura.ClienteRepository;
-import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
-import com.br.fiap.camada.interfaceUsuario.LocalAcessadoEnum;
+import java.util.Objects;
 
 @Service
-public class ClienteService {
+public class LeadService {
 	
 	@Autowired
-	private ClienteRepository clienteRepository;
+	private LeadRepository leadRepository;
 	
 	@Autowired
 	private FilaAtendimentoRepository filaAtendimentoRepository;
-	
-	public ResponseEntity<Void> cadastraCliente(CadastroClienteDTO formulario,
-			LocalAcessadoEnum localAcessado) {
-		if(localAcessado.equals(LocalAcessadoEnum.ESTANDE)) {
-			this.clienteRepository.save(formulario.converteParaCliente());
-		} else {
-			this.filaAtendimentoRepository.save(formulario.converteParaFilaDeAtendimento());
-		}
+
+	@Transactional
+	public ResponseEntity<Void> cadastraLead(CadastroLeadDTO formulario) {
+		this.leadRepository.save(formulario.converteParaLead());
+		this.filaAtendimentoRepository.save(formulario.converteParaFilaDeAtendimento());
 		return ResponseEntity
 				.status(HttpStatus.CREATED)
 				.build();

@@ -1,6 +1,6 @@
 package com.br.fiap.camada.dominio.modelo.entidade;
 
-import com.br.fiap.camada.dominio.modelo.objetoDeValor.Cliente;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.Lead;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -21,6 +21,6 @@ public class Atendimento {
 	private Long id;
 	private String nome; 
 	@OneToOne(cascade = CascadeType.MERGE)
-	private Cliente cliente;
+	private Lead cliente;
 
 }
