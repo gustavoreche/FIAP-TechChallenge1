@@ -1,11 +1,15 @@
 package com.br.fiap;
 
+import com.br.fiap.camada.dominio.modelo.entidade.FiltroDeBusca;
 import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
+import com.br.fiap.camada.dominio.modelo.objetoDeValor.Lead;
 import com.br.fiap.camada.dominio.modelo.objetoDeValor.LeadId;
 import com.br.fiap.camada.infraestrutura.AtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.LeadRepository;
 import com.br.fiap.camada.interfaceUsuario.AtendimentoController;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.OneToOne;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -60,6 +64,9 @@ class RegistraAtendimentoTests {
 
     @Test
     public void deveRetornarStatus201() throws Exception {
+		var lead = this.criaLead();
+		this.leadRepository.save(lead);
+
 		var leadNaFilaAtendimento = this.criaUmLeadNaFilaDeAtendimento();
     	this.filaAtendimentoRepository.save(leadNaFilaAtendimento);
     	
@@ -97,6 +104,12 @@ class RegistraAtendimentoTests {
 
     @Test
     public void deveRetornarStatus201_comMaisDeUmLead() throws Exception {
+		var lead = this.criaLead();
+		var lead2 = this.criaOutroLead();
+		var listaLead = List.of(lead, lead2);
+		this.leadRepository.saveAll(listaLead);
+
+
 		var leadNaFilaAtendimento = this.criaUmLeadNaFilaDeAtendimento();
 		var lead2NaFilaAtendimento = this.criaOutroLeadNaFilaDeAtendimento();
 
@@ -133,6 +146,47 @@ class RegistraAtendimentoTests {
         Assertions.assertEquals(1, this.filaAtendimentoRepository.findAll().size());
         Assertions.assertEquals(1, this.atendimentoRepository.findAll().size());
     }
+
+	@Test
+	public void deveRetornarStatus500_registroDeAtendimentoSemCapturarLead() throws Exception {
+		var leadNaFilaAtendimento = this.criaUmLeadNaFilaDeAtendimento();
+		var lead2NaFilaAtendimento = this.criaOutroLeadNaFilaDeAtendimento();
+
+		var lista = List.of(leadNaFilaAtendimento, lead2NaFilaAtendimento);
+		this.filaAtendimentoRepository.saveAll(lista);
+
+		var request = """
+        		{
+        			"nome": "Anderson",
+        			"lead": {
+					    "nome": "%s",
+					    "telefone": "%s",
+					    "email": "%s",
+					    "ano": "%s",
+					    "modelo": "%s"
+					  }
+        		}
+        		""".formatted(
+				leadNaFilaAtendimento.getId().getNome(),
+				leadNaFilaAtendimento.getTelefone(),
+				leadNaFilaAtendimento.getId().getEmail(),
+				leadNaFilaAtendimento.getAnoFiltroDeBusca(),
+				leadNaFilaAtendimento.getModeloFiltroDeBusca()
+		);
+
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post(URL_ATENDIMENTO)
+						.contentType(MediaType.APPLICATION_JSON)
+						.content(request))
+				.andExpect(MockMvcResultMatchers
+						.status()
+						.isInternalServerError()
+				)
+				.andReturn()
+				.equals("Não pode registrar um atendimento sem capturar um LEAD");
+		Assertions.assertEquals(2, this.filaAtendimentoRepository.findAll().size());
+		Assertions.assertEquals(0, this.atendimentoRepository.findAll().size());
+	}
     
 	@Test
     public void deveRetornarStatus400_campoNomeVendedorNull() throws Exception {
@@ -205,6 +259,36 @@ class RegistraAtendimentoTests {
 			);
 		Assertions.assertEquals(1, this.filaAtendimentoRepository.findAll().size());
 		Assertions.assertEquals(0, this.atendimentoRepository.findAll().size());
+	}
+
+	private Lead criaLead() {
+		var leadId = new LeadId();
+		leadId.setNome("gustavo");
+		leadId.setEmail("gustavo@teste.com");
+		var filtroDeBusca = new FiltroDeBusca();
+		filtroDeBusca.setAno("2020");
+		filtroDeBusca.setModelo("gol");
+		var lead = new Lead();
+		lead.setId(leadId);
+		lead.setTelefone("911223344");
+		lead.setFiltroDeBusca(filtroDeBusca);
+		lead.setDataInsercao(LocalDateTime.now().plusMinutes(1));
+		return lead;
+	}
+
+	private Lead criaOutroLead() {
+		var leadId = new LeadId();
+		leadId.setNome("gustavo teste");
+		leadId.setEmail("teste@gustavo.com");
+		var filtroDeBusca = new FiltroDeBusca();
+		filtroDeBusca.setAno("2024");
+		filtroDeBusca.setModelo("onix");
+		var lead = new Lead();
+		lead.setId(leadId);
+		lead.setTelefone("991919191");
+		lead.setFiltroDeBusca(filtroDeBusca);
+		lead.setDataInsercao(LocalDateTime.now().plusMinutes(5));
+		return lead;
 	}
 
 	private FilaAtendimento criaUmLeadNaFilaDeAtendimento() {

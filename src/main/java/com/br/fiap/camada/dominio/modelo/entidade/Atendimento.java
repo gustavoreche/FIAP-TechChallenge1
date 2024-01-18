@@ -13,7 +13,7 @@ public class Atendimento {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 	private String nome; 
-	@OneToOne(cascade = CascadeType.PERSIST)
+	@OneToOne(cascade = CascadeType.MERGE)
 	private Lead lead;
 
 }
