@@ -8,8 +8,6 @@ import com.br.fiap.camada.infraestrutura.AtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.LeadRepository;
 import com.br.fiap.camada.interfaceUsuario.AtendimentoController;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.OneToOne;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -33,7 +31,7 @@ import static com.br.fiap.camada.interfaceUsuario.AtendimentoController.URL_ATEN
 class RegistraAtendimentoTests {
 	
 	@Autowired
-    AtendimentoController vendedorController;
+    AtendimentoController atendimentoController;
 	
 	@Autowired
 	AtendimentoRepository atendimentoRepository;

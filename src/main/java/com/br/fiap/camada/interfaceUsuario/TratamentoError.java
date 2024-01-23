@@ -1,6 +1,7 @@
 package com.br.fiap.camada.interfaceUsuario;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,6 +26,12 @@ public class TratamentoError {
 	    		errors.put(fieldName, errorMessage);
 	    	});
 	    return errors;
+	}
+
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(HttpMessageNotReadableException.class)
+	public String trataErroNaValidacao(HttpMessageNotReadableException ex) {
+		return "Erro de valor nos campos... O campo espera um valor(texto, número...) e foi passado outro valor. Segue o valor errado: " + ex.getMessage();
 	}
 
 	@ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
