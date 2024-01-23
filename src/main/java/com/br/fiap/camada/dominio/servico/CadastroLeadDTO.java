@@ -20,7 +20,7 @@ public record CadastroLeadDTO(
 		
 		@NotBlank(message = "O telefone nao pode ser vazio")
 		@Size(min = 10, max = 11, message = "Formato de telefone inválido. Exemplo: 16911223344")
-		@Positive(message = "O telefone só deve conter números")
+		@Positive(message = "O telefone não pode ser com valor NEGATIVO")
 		@JsonInclude(JsonInclude.Include.NON_NULL)
 		String telefone,
 		
@@ -32,7 +32,7 @@ public record CadastroLeadDTO(
 
 		@NotBlank(message = "O ano nao pode ser vazio")
 		@Size(min = 4, max = 4, message = "Formato de ano inválido. Exemplo: 2018")
-		@Positive(message = "O ano só deve conter números")
+		@Positive(message = "O ano não pode ser com valor NEGATIVO")
 		@JsonInclude(JsonInclude.Include.NON_NULL)
 		String ano,
 

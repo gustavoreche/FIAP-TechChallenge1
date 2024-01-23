@@ -4,6 +4,8 @@ import com.br.fiap.camada.dominio.modelo.objetoDeValor.Lead;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "tb_atendimento")
 @Data
@@ -15,5 +17,6 @@ public class Atendimento {
 	private String nome; 
 	@OneToOne(cascade = CascadeType.MERGE)
 	private Lead lead;
+	private BigDecimal valorDaProposta;
 
 }
