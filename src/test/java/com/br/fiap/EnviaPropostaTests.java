@@ -74,7 +74,7 @@ class EnviaPropostaTests {
 		List<Atendimento> atendimentos = this.atendimentoRepository.findAll();
     	
         this.mockMvc
-        	.perform(MockMvcRequestBuilders.patch(URL_VALOR_PROPOSTA.replace("{atendimentoId}", String.valueOf(atendimentos.get(0).getId())))
+        	.perform(MockMvcRequestBuilders.put(URL_VALOR_PROPOSTA.replace("{atendimentoId}", String.valueOf(atendimentos.get(0).getId())))
         			.contentType(MediaType.APPLICATION_JSON)
         			.content(request))
         	.andExpect(MockMvcResultMatchers
@@ -99,7 +99,7 @@ class EnviaPropostaTests {
         		""";
 
 		this.mockMvc
-				.perform(MockMvcRequestBuilders.patch(URL_VALOR_PROPOSTA.replace("{atendimentoId}", "1"))
+				.perform(MockMvcRequestBuilders.put(URL_VALOR_PROPOSTA.replace("{atendimentoId}", "1"))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(request))
 				.andExpect(MockMvcResultMatchers
@@ -150,7 +150,7 @@ class EnviaPropostaTests {
     
 	private void assertBadRequest(String request) throws Exception {
 		this.mockMvc
-				.perform(MockMvcRequestBuilders.post(URL_ATENDIMENTO)
+				.perform(MockMvcRequestBuilders.put(URL_VALOR_PROPOSTA.replace("{atendimentoId}", "1"))
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(request))
 				.andExpect(MockMvcResultMatchers

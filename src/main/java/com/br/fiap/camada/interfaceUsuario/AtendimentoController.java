@@ -25,7 +25,7 @@ public class AtendimentoController {
 		return this.service.registraAtendimento(formulario);
 	}
 
-	@PatchMapping("/envia-proposta/{atendimentoId}")
+	@PutMapping("/envia-proposta/{atendimentoId}")
 	public ResponseEntity<String> enviaProposta(@PathVariable("atendimentoId") Long atendimentoId,
 											  @RequestBody @Valid ValorDaPropostaDTO valorDaPropostaDTO) {
 		return this.service.enviaProposta(atendimentoId, valorDaPropostaDTO.valorDaProposta());
