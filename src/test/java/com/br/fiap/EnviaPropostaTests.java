@@ -70,16 +70,18 @@ class EnviaPropostaTests {
         			"valorDaProposta": 10000
         		}
         		""";
+
+		List<Atendimento> atendimentos = this.atendimentoRepository.findAll();
     	
         this.mockMvc
-        	.perform(MockMvcRequestBuilders.patch(URL_VALOR_PROPOSTA.replace("{atendimentoId}", "1"))
+        	.perform(MockMvcRequestBuilders.patch(URL_VALOR_PROPOSTA.replace("{atendimentoId}", String.valueOf(atendimentos.get(0).getId())))
         			.contentType(MediaType.APPLICATION_JSON)
         			.content(request))
         	.andExpect(MockMvcResultMatchers
         			.status()
         			.isAccepted()
 			);
-		List<Atendimento> atendimentos = this.atendimentoRepository.findAll();
+		atendimentos = this.atendimentoRepository.findAll();
 		Assertions.assertEquals(1, atendimentos.size());
         Assertions.assertNotNull(atendimentos.get(0).getValorDaProposta());
         Assertions.assertEquals(new BigDecimal("10000.00"), atendimentos.get(0).getValorDaProposta());
