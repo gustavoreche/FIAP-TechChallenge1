@@ -9,6 +9,6 @@ import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
 @Repository
 public interface FilaAtendimentoRepository extends JpaRepository<FilaAtendimento, LeadId> {
 	
-	public FilaAtendimento findTop1ByOrderByDataInsercaoAsc();
+	FilaAtendimento findTop1ByOrderByDataInsercaoAsc();
 
 }

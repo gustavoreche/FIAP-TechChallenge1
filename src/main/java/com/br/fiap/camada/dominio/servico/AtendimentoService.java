@@ -12,6 +12,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -67,4 +70,26 @@ public class AtendimentoService {
 				""".formatted(email));
 	}
 
+	public ResponseEntity<InformaPropostaDTO> pegaProposta(String leadNome,
+													String leadEmail) {
+		var valorDaProposta = this.atendimentoRepository.findTop1ByLead_id_nomeAndLead_id_emailOrderByIdDesc(leadNome, leadEmail);
+		if(Objects.isNull(valorDaProposta)) {
+			return ResponseEntity
+					.noContent()
+					.build();
+		}
+
+		BigDecimal valorDaParcelaEm24Vezes = valorDaProposta.getValorDaProposta().divide(new BigDecimal(24), RoundingMode.UP);
+		BigDecimal valorDaParcelaEm36Vezes = valorDaProposta.getValorDaProposta().divide(new BigDecimal(36), RoundingMode.UP);
+		var parcelaEm24 = new ParcelasDTO(24, valorDaParcelaEm24Vezes);
+		var parcelaEm36 = new ParcelasDTO(36, valorDaParcelaEm36Vezes);
+		var parcelas = List.of(parcelaEm24, parcelaEm36);
+		return ResponseEntity
+				.ok(
+						new InformaPropostaDTO(
+								valorDaProposta.getValorDaProposta(),
+								parcelas
+						)
+				);
+	}
 }

@@ -2,10 +2,12 @@ package com.br.fiap;
 
 import com.br.fiap.camada.dominio.modelo.objetoDeValor.FilaAtendimento;
 import com.br.fiap.camada.dominio.modelo.objetoDeValor.LeadId;
+import com.br.fiap.camada.dominio.servico.InformaPropostaDTO;
 import com.br.fiap.camada.dominio.servico.LeadNaFilaDTO;
 import com.br.fiap.camada.infraestrutura.FilaAtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.LeadRepository;
 import com.br.fiap.camada.interfaceUsuario.LeadController;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.TestInstance.Lifecycle;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +15,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -28,6 +31,9 @@ class PegaProximoLeadDaFilaTests {
 	
 	@Autowired
     LeadController leadController;
+
+	@Autowired
+	private ObjectMapper objectMapper;
 	
 	@Autowired
 	LeadRepository leadRepository;
@@ -72,23 +78,26 @@ class PegaProximoLeadDaFilaTests {
 
 		var lista = List.of(leadNaFilaAtendimento, lead2NaFilaAtendimento);
     	this.filaAtendimentoRepository.saveAll(lista);
-    	
-        this.mockMvc
+
+		MvcResult response = this.mockMvc
         	.perform(MockMvcRequestBuilders.get(URL_LEAD_PROXIMO_DA_FILA)
         			.contentType(MediaType.APPLICATION_JSON))
         	.andExpect(MockMvcResultMatchers
         			.status()
         			.isOk()
 			)
-        	.andReturn()
-        	.equals(new LeadNaFilaDTO(
-					lead2NaFilaAtendimento.getId().getNome(),
-					lead2NaFilaAtendimento.getId().getEmail(),
-					lead2NaFilaAtendimento.getTelefone(),
-					lead2NaFilaAtendimento.getAnoFiltroDeBusca(),
-					lead2NaFilaAtendimento.getModeloFiltroDeBusca()
-        			)
-        		);
+        	.andReturn();
+		String responseAppString = response.getResponse().getContentAsString();
+		LeadNaFilaDTO responseApp = this.objectMapper
+				.readValue(responseAppString, LeadNaFilaDTO.class);
+
+		Assertions.assertEquals(new LeadNaFilaDTO(
+				lead2NaFilaAtendimento.getId().getNome(),
+				lead2NaFilaAtendimento.getId().getEmail(),
+				lead2NaFilaAtendimento.getTelefone(),
+				lead2NaFilaAtendimento.getAnoFiltroDeBusca(),
+				lead2NaFilaAtendimento.getModeloFiltroDeBusca()
+		), responseApp);
         Assertions.assertEquals(2, this.filaAtendimentoRepository.findAll().size());
     }
     
