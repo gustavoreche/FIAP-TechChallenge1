@@ -66,7 +66,7 @@ class FalhaParaRegistrarAtendimentoTests {
 
 		var request = """
         		{
-        			"nome": "Anderson",
+        			"nomeVendedor": "Anderson",
         			"lead": {
 					    "nome": "%s",
 					    "telefone": "%s",

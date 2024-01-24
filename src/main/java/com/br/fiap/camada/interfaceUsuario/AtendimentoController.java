@@ -2,6 +2,7 @@ package com.br.fiap.camada.interfaceUsuario;
 
 import com.br.fiap.camada.dominio.servico.AtendimentoDTO;
 import com.br.fiap.camada.dominio.servico.AtendimentoService;
+import com.br.fiap.camada.dominio.servico.InformaPropostaDTO;
 import com.br.fiap.camada.dominio.servico.ValorDaPropostaDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ public class AtendimentoController {
 
 	public static final String URL_ATENDIMENTO = "/atendimento";
 	public static final String URL_VALOR_PROPOSTA = URL_ATENDIMENTO.concat("/envia-proposta/{atendimentoId}");
+	public static final String URL_PEGA_PROPOSTA = URL_ATENDIMENTO.concat("/proposta/{nome}/{email}");
 
 	@Autowired
 	private AtendimentoService service;
@@ -29,6 +31,12 @@ public class AtendimentoController {
 	public ResponseEntity<String> enviaProposta(@PathVariable("atendimentoId") Long atendimentoId,
 											  @RequestBody @Valid ValorDaPropostaDTO valorDaPropostaDTO) {
 		return this.service.enviaProposta(atendimentoId, valorDaPropostaDTO.valorDaProposta());
+	}
+
+	@GetMapping("/proposta/{nome}/{email}")
+	public ResponseEntity<InformaPropostaDTO> pegaProposta(@PathVariable String nome,
+														   @PathVariable String email) {
+		return this.service.pegaProposta(nome, email);
 	}
 
 }

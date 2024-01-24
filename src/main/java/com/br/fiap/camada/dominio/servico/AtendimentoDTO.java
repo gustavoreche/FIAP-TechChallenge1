@@ -8,9 +8,9 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 public record AtendimentoDTO (
-		@NotBlank(message = "O nome nao pode ser vazio")
-		@Size(min = 5, max = 50, message = "O nome deve ter no mínimo 5 letras e no máximo 50 letras")
-		String nome,
+		@NotBlank(message = "O nomeVendedor nao pode ser vazio")
+		@Size(min = 5, max = 50, message = "O nomeVendedor deve ter no mínimo 5 letras e no máximo 50 letras")
+		String nomeVendedor,
 		
 		@NotNull
         CadastroLeadDTO lead
@@ -19,7 +19,7 @@ public record AtendimentoDTO (
 
 	public Atendimento converteParaAtendimento() {
 		var atendimento = new Atendimento();
-		atendimento.setNome(this.nome);
+		atendimento.setNomeVendedor(this.nomeVendedor);
 		atendimento.setLead(this.lead.converteParaLead());
 		return atendimento;
 	}

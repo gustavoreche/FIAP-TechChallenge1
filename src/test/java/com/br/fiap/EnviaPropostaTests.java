@@ -24,7 +24,6 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static com.br.fiap.camada.interfaceUsuario.AtendimentoController.URL_ATENDIMENTO;
 import static com.br.fiap.camada.interfaceUsuario.AtendimentoController.URL_VALOR_PROPOSTA;
 
 @AutoConfigureMockMvc
@@ -193,7 +192,7 @@ class EnviaPropostaTests {
 	private Atendimento criaAtendimento(Lead lead) {
 		var atendimento = new Atendimento();
 		atendimento.setLead(lead);
-		atendimento.setNome("Gustavo Vendedor");
+		atendimento.setNomeVendedor("Gustavo Vendedor");
 		return atendimento;
 	}
 

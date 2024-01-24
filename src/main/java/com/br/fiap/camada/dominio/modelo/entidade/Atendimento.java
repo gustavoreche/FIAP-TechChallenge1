@@ -14,8 +14,8 @@ public class Atendimento {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-	private String nome; 
-	@OneToOne(cascade = CascadeType.MERGE)
+	private String nomeVendedor;
+	@ManyToOne
 	private Lead lead;
 	private BigDecimal valorDaProposta;
 

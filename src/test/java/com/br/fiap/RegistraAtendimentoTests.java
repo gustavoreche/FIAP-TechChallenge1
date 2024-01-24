@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
@@ -70,7 +71,7 @@ class RegistraAtendimentoTests {
     	
         var request = """
         		{
-        			"nome": "Anderson",
+        			"nomeVendedor": "Anderson",
         			"lead": {
 					    "nome": "%s",
 					    "telefone": "%s",
@@ -116,7 +117,7 @@ class RegistraAtendimentoTests {
     	
         var request = """
         		{
-        			"nome": "Anderson",
+        			"nomeVendedor": "Anderson",
         			"lead": {
 					    "nome": "%s",
 					    "telefone": "%s",
@@ -155,7 +156,7 @@ class RegistraAtendimentoTests {
 
 		var request = """
         		{
-        			"nome": "Anderson",
+        			"nomeVendedor": "Anderson",
         			"lead": {
 					    "nome": "%s",
 					    "telefone": "%s",
@@ -172,7 +173,7 @@ class RegistraAtendimentoTests {
 				leadNaFilaAtendimento.getModeloFiltroDeBusca()
 		);
 
-		this.mockMvc
+		MvcResult response = this.mockMvc
 				.perform(MockMvcRequestBuilders.post(URL_ATENDIMENTO)
 						.contentType(MediaType.APPLICATION_JSON)
 						.content(request))
@@ -180,8 +181,9 @@ class RegistraAtendimentoTests {
 						.status()
 						.isInternalServerError()
 				)
-				.andReturn()
-				.equals("Não pode registrar um atendimento sem capturar um LEAD");
+				.andReturn();
+		String responseAppString = response.getResponse().getContentAsString();
+		Assertions.assertEquals("Não pode registrar um atendimento sem capturar um LEAD", responseAppString);
 		Assertions.assertEquals(2, this.filaAtendimentoRepository.findAll().size());
 		Assertions.assertEquals(0, this.atendimentoRepository.findAll().size());
 	}
@@ -225,7 +227,7 @@ class RegistraAtendimentoTests {
     	
         var request = """
         		{
-        		 	"nome": "%s",
+        		 	"nomeVendedor": "%s",
         			"lead": {
 					    "nome": "%s",
 					    "telefone": "%s",
