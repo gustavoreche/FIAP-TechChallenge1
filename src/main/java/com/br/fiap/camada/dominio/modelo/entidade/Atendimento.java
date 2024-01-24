@@ -18,5 +18,6 @@ public class Atendimento {
 	@ManyToOne
 	private Lead lead;
 	private BigDecimal valorDaProposta;
+	private String statusProposta;
 
 }

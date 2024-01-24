@@ -17,6 +17,7 @@ public class AtendimentoController {
 
 	public static final String URL_ATENDIMENTO = "/atendimento";
 	public static final String URL_VALOR_PROPOSTA = URL_ATENDIMENTO.concat("/envia-proposta/{atendimentoId}");
+	public static final String URL_RECUSA_PROPOSTA = URL_ATENDIMENTO.concat("/recusa-proposta/{atendimentoId}");
 	public static final String URL_PEGA_PROPOSTA = URL_ATENDIMENTO.concat("/proposta/{nome}/{email}");
 
 	@Autowired
@@ -29,8 +30,13 @@ public class AtendimentoController {
 
 	@PutMapping("/envia-proposta/{atendimentoId}")
 	public ResponseEntity<String> enviaProposta(@PathVariable("atendimentoId") Long atendimentoId,
-											  @RequestBody @Valid ValorDaPropostaDTO valorDaPropostaDTO) {
+												@RequestBody @Valid ValorDaPropostaDTO valorDaPropostaDTO) {
 		return this.service.enviaProposta(atendimentoId, valorDaPropostaDTO.valorDaProposta());
+	}
+
+	@PutMapping("/recusa-proposta/{atendimentoId}")
+	public ResponseEntity<Void> recusaProposta(@PathVariable("atendimentoId") Long atendimentoId) {
+		return this.service.recusaProposta(atendimentoId);
 	}
 
 	@GetMapping("/proposta/{nome}/{email}")

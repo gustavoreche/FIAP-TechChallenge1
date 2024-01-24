@@ -86,6 +86,7 @@ class PegaPropostaTests {
 		InformaPropostaDTO retornoEsperado = this.objectMapper
 				.readValue("""
 					{
+					  "idAtendimento": 1,
 					  "valorDaProposta": 50000.00,
 					  "parcelas": [
 					    {
@@ -131,6 +132,7 @@ class PegaPropostaTests {
 		InformaPropostaDTO retornoEsperado = this.objectMapper
 				.readValue("""
 				{
+				  "idAtendimento": 3,
 				  "valorDaProposta": 80000.00,
 				  "parcelas": [
 				    {
