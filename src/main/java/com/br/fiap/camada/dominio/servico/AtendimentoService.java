@@ -58,6 +58,19 @@ public class AtendimentoService {
 				.body("Um e-mail será enviado ao cliente com o valor da PROPOSTA");
 	}
 
+	public ResponseEntity<Void> recusaProposta(Long atendimentoId) {
+		Optional<Atendimento> atendimento = this.atendimentoRepository.findById(atendimentoId);
+		if(atendimento.isEmpty()) {
+			throw new RuntimeException("Não pode recusar uma proposta sem ter iniciado um ATENDIMENTO");
+		}
+		var atendimentoEntidade = atendimento.get();
+		atendimentoEntidade.setStatusProposta(StatusPropostaEnum.RECUSADA.name());
+		this.atendimentoRepository.save(atendimentoEntidade);
+		return ResponseEntity
+				.status(HttpStatus.OK)
+				.build();
+	}
+
 	private void simulacaoDeEnvioDeEmail(String email) {
 		System.out.println("""
 				.....................................................................
@@ -72,22 +85,24 @@ public class AtendimentoService {
 
 	public ResponseEntity<InformaPropostaDTO> pegaProposta(String leadNome,
 													String leadEmail) {
-		var valorDaProposta = this.atendimentoRepository.findTop1ByLead_id_nomeAndLead_id_emailOrderByIdDesc(leadNome, leadEmail);
-		if(Objects.isNull(valorDaProposta)) {
+		var proposta = this.atendimentoRepository
+				.findTop1ByLead_id_nomeAndLead_id_emailAndStatusPropostaIsNullOrderByIdDesc(leadNome, leadEmail);
+		if(Objects.isNull(proposta)) {
 			return ResponseEntity
 					.noContent()
 					.build();
 		}
 
-		BigDecimal valorDaParcelaEm24Vezes = valorDaProposta.getValorDaProposta().divide(new BigDecimal(24), RoundingMode.UP);
-		BigDecimal valorDaParcelaEm36Vezes = valorDaProposta.getValorDaProposta().divide(new BigDecimal(36), RoundingMode.UP);
+		BigDecimal valorDaParcelaEm24Vezes = proposta.getValorDaProposta().divide(new BigDecimal(24), RoundingMode.UP);
+		BigDecimal valorDaParcelaEm36Vezes = proposta.getValorDaProposta().divide(new BigDecimal(36), RoundingMode.UP);
 		var parcelaEm24 = new ParcelasDTO(24, valorDaParcelaEm24Vezes);
 		var parcelaEm36 = new ParcelasDTO(36, valorDaParcelaEm36Vezes);
 		var parcelas = List.of(parcelaEm24, parcelaEm36);
 		return ResponseEntity
 				.ok(
 						new InformaPropostaDTO(
-								valorDaProposta.getValorDaProposta(),
+								proposta.getId(),
+								proposta.getValorDaProposta(),
 								parcelas
 						)
 				);

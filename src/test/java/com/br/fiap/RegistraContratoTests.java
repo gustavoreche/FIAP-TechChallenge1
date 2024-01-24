@@ -7,6 +7,7 @@ import com.br.fiap.camada.dominio.modelo.objetoDeValor.Lead;
 import com.br.fiap.camada.dominio.modelo.objetoDeValor.LeadId;
 import com.br.fiap.camada.dominio.servico.ContratoDTO;
 import com.br.fiap.camada.dominio.servico.InformaPropostaDTO;
+import com.br.fiap.camada.dominio.servico.StatusPropostaEnum;
 import com.br.fiap.camada.infraestrutura.AtendimentoRepository;
 import com.br.fiap.camada.infraestrutura.ContratoRepository;
 import com.br.fiap.camada.infraestrutura.LeadRepository;
@@ -106,6 +107,9 @@ class RegistraContratoTests {
 		var contrato = this.contratoRepository.findAll().get(0);
 		Assertions.assertEquals(24, contrato.getQuantidadeParcelas());
 		Assertions.assertEquals(new BigDecimal("2083.34"), contrato.getValorPorParcela());
+		Atendimento atendimentoEntidade = this.atendimentoRepository.findAll()
+				.get(0);
+		Assertions.assertEquals(atendimentoEntidade.getStatusProposta(), StatusPropostaEnum.ACEITADA.name());
 	}
 
 	@Test
@@ -145,6 +149,8 @@ class RegistraContratoTests {
 		var contrato = this.contratoRepository.findAll().get(0);
 		Assertions.assertEquals(24, contrato.getQuantidadeParcelas());
 		Assertions.assertEquals(new BigDecimal("3333.34"), contrato.getValorPorParcela());
+		Atendimento atendimentoEntidade = this.atendimentoRepository.findById(contrato.getAtendimento().getId()).get();
+		Assertions.assertEquals(atendimentoEntidade.getStatusProposta(), StatusPropostaEnum.ACEITADA.name());
 	}
 
 	@Test

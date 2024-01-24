@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface AtendimentoRepository extends JpaRepository<Atendimento, Long> {
-
-    ProjectValorEIdDaProposta findTop1ByLead_id_nomeAndLead_id_emailOrderByIdDesc(String leadNome, String leadEmail);
+    ProjectValorEIdDaProposta findTop1ByLead_id_nomeAndLead_id_emailAndStatusPropostaIsNullOrderByIdDesc(String leadNome,
+                                                                                                         String leadEmail);
 }
