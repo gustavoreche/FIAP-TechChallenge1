@@ -1,8 +1,13 @@
 package com.br.fiap.camada.dominio.servico;
 
+import com.br.fiap.camada.dominio.modelo.entidade.Atendimento;
+import com.br.fiap.camada.dominio.modelo.entidade.Contrato;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 public record ContratoDTO(
 
@@ -33,4 +38,13 @@ public record ContratoDTO(
 		@Positive(message = "O valorDaProposta não pode ser com valor NEGATIVO")
 		@JsonInclude(JsonInclude.Include.NON_NULL)
 		String valorDaParcela
-) {}
+) {
+	public Contrato converteParaContrato(Atendimento atendimento) {
+		var contrato = new Contrato();
+		contrato.setAtendimento(atendimento);
+		contrato.setDataInsercao(LocalDateTime.now());
+		contrato.setQuantidadeParcelas(Integer.parseInt(this.quantidadeDeParcelas));
+		contrato.setValorPorParcela(new BigDecimal(this.valorDaParcela));
+		return contrato;
+	}
+}
